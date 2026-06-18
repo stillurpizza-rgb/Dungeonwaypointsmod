@@ -1,13 +1,11 @@
 package com.odtheking.dungeonwaypoints.events.core
 
-interface Event {
+abstract class Event {
+    var cancelled: Boolean = false
+    fun cancel() { cancelled = true }
+    fun isCancelled(): Boolean = cancelled
+}
 
-    fun postAndCatch(): Boolean {
-        runCatching {
-            EventBus.post(this)
-        }.onFailure {
-            logError(it, this)
-        }
-        return false
-    }
+interface CancellableEvent {
+    var cancelled: Boolean
 }

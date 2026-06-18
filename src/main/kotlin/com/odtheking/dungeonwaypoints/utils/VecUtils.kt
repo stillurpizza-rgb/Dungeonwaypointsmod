@@ -1,7 +1,7 @@
 package com.odtheking.dungeonwaypoints.utils
 
-import com.odtheking.odin.OdinMod.mc
-import com.odtheking.odin.utils.skyblock.dungeon.tiles.Rotations
+import com.odtheking.dungeonwaypoints.OdinMod.mc
+import com.odtheking.dungeonwaypoints.utils.skyblock.dungeon.tiles.Rotations
 import net.minecraft.core.BlockPos
 import net.minecraft.world.phys.AABB
 import net.minecraft.world.phys.Vec3
@@ -21,17 +21,11 @@ operator fun BlockPos.component3(): Int = z
 
 operator fun Vec3.unaryMinus(): Vec3 = Vec3(-x, -y, -z)
 
-fun Vec3.floorVec(): Vec3 =
-    Vec3(floor(x), floor(y), floor(z))
+fun Vec3.floorVec(): Vec3 = Vec3(floor(x), floor(y), floor(z))
 
 fun Vec3.addVec(x: Number = 0.0, y: Number = 0.0, z: Number = 0.0): Vec3 =
     Vec3(this.x + x.toDouble(), this.y + y.toDouble(), this.z + z.toDouble())
 
-/**
- * Rotates a Vec3 around the given rotation.
- * @param rotation The rotation to rotate around
- * @return The rotated Vec3
- */
 fun BlockPos.rotateAroundNorth(rotation: Rotations): BlockPos =
     when (rotation) {
         Rotations.NORTH -> BlockPos(-this.x, this.y, -this.z)
@@ -41,11 +35,6 @@ fun BlockPos.rotateAroundNorth(rotation: Rotations): BlockPos =
         else -> this
     }
 
-/**
- * Rotates a Vec3 to the given rotation.
- * @param rotation The rotation to rotate to
- * @return The rotated Vec3
- */
 fun BlockPos.rotateToNorth(rotation: Rotations): BlockPos =
     when (rotation) {
         Rotations.NORTH -> BlockPos(-this.x, this.y, -this.z)

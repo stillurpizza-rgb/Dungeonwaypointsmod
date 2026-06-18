@@ -43,25 +43,13 @@ class Color(hue: Float, saturation: Float, brightness: Float, alpha: Float = 1f)
             needsUpdate = true
         }
 
-    /**
-     * Used to tell the [rgba] value to update when the HSBA values are changed.
-     *
-     * @see rgba
-     */
     @Transient
     private var needsUpdate = true
 
-    /**
-     * RGBA value from a color.
-     *
-     * Gets recolored when the HSBA values are changed.
-     * @see needsUpdate
-     */
     var rgba: Int = 0
         get() {
             if (needsUpdate) {
-                field =
-                    (HSBtoRGB(hue, saturation, brightness) and 0X00FFFFFF) or ((this.alphaFloat * 255).toInt() shl 24)
+                field = (HSBtoRGB(hue, saturation, brightness) and 0X00FFFFFF) or ((this.alphaFloat * 255).toInt() shl 24)
                 needsUpdate = false
             }
             return field
@@ -83,10 +71,6 @@ class Color(hue: Float, saturation: Float, brightness: Float, alpha: Float = 1f)
         else hexString.substring(2)
     }
 
-    /**
-     * Checks if color isn't visible.
-     * Main use is to prevent rendering when the color is invisible.
-     */
     inline val isTransparent: Boolean
         get() = this.alpha == 0
 
@@ -119,44 +103,10 @@ class Color(hue: Float, saturation: Float, brightness: Float, alpha: Float = 1f)
             return JsonPrimitive("#${color.hex()}")
         }
     }
-
-    companion object {
-        inline val Int.red get() = this shr 16 and 0xFF
-        inline val Int.green get() = this shr 8 and 0xFF
-        inline val Int.blue get() = this and 0xFF
-        inline val Int.alpha get() = this shr 24 and 0xFF
-
-        fun Color.brighter(factor: Float = 1.3f): Color {
-            return Color(
-                hue, saturation, (brightness * factor.coerceAtLeast(1f)).coerceAtMost(1f),
-                this.alphaFloat
-            )
-        }
-
-        fun Color.darker(factor: Float = 0.7f): Color {
-            return Color(hue, saturation, brightness * factor, this.alphaFloat)
-        }
-
-        fun Color.withAlpha(alpha: Float, newInstance: Boolean = true): Color {
-            return if (newInstance) Color(red, green, blue, alpha)
-            else {
-                this.alphaFloat = alpha
-                this
-            }
-        }
-
-        fun Color.multiplyAlpha(factor: Float): Color {
-            return Color(red, green, blue, (alphaFloat * factor).coerceIn(0f, 1f))
-        }
-
-        fun Color.hsbMax(): Color {
-            return Color(hue, 1f, 1f)
-        }
-    }
 }
 
+// ========== Colors Object ==========
 object Colors {
-
     @JvmField val MINECRAFT_DARK_BLUE = Color(0, 0, 170)
     @JvmField val MINECRAFT_DARK_GREEN = Color(0, 170, 0)
     @JvmField val MINECRAFT_DARK_AQUA = Color(0, 170, 170)
@@ -177,4 +127,37 @@ object Colors {
 
     @JvmField val gray38 = Color(38, 38, 38)
     @JvmField val gray26 = Color(26, 26, 26)
+}
+
+// ========== Top-level Extension Functions ==========
+inline val Int.red get() = this shr 16 and 0xFF
+inline val Int.green get() = this shr 8 and 0xFF
+inline val Int.blue get() = this and 0xFF
+inline val Int.alpha get() = this shr 24 and 0xFF
+
+fun Color.brighter(factor: Float = 1.3f): Color {
+    return Color(
+        hue, saturation, (brightness * factor.coerceAtLeast(1f)).coerceAtMost(1f),
+        this.alphaFloat
+    )
+}
+
+fun Color.darker(factor: Float = 0.7f): Color {
+    return Color(hue, saturation, brightness * factor, this.alphaFloat)
+}
+
+fun Color.withAlpha(alpha: Float, newInstance: Boolean = true): Color {
+    return if (newInstance) Color(red, green, blue, alpha)
+    else {
+        this.alphaFloat = alpha
+        this
+    }
+}
+
+fun Color.multiplyAlpha(factor: Float): Color {
+    return Color(red, green, blue, (alphaFloat * factor).coerceIn(0f, 1f))
+}
+
+fun Color.hsbMax(): Color {
+    return Color(hue, 1f, 1f)
 }
