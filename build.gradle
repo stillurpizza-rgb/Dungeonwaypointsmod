@@ -1,5 +1,5 @@
 plugins {
-    id 'fabric-loom' version '1.9.2'  // ← Use this version!
+    id 'fabric-loom' version '1.10.12'  // Updated for Java 25 support
     id 'org.jetbrains.kotlin.jvm' version '2.3.20'
     id 'maven-publish'
 }
@@ -33,6 +33,6 @@ processResources {
 }
 
 java {
-    sourceCompatibility = JavaVersion.VERSION_21
-    targetCompatibility = JavaVersion.VERSION_21
+    sourceCompatibility = JavaVersion.VERSION_25
+    targetCompatibility = JavaVersion.VERSION_25
 }
