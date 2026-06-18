@@ -1,5 +1,5 @@
 plugins {
-    id 'fabric-loom' version '1.10.12'  // Updated for Java 25 support
+    id 'fabric-loom' version '1.15'  // Latest for Java 25 + Minecraft 26.1
     id 'org.jetbrains.kotlin.jvm' version '2.3.20'
     id 'maven-publish'
 }
