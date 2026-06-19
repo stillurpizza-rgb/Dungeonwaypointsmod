@@ -1,10 +1,9 @@
 package com.odtheking.dungeonwaypoints
 
-import net.fabricmc.api.ClientModInitializer
+import net.fabricmc.api.ModInitializer
 
-object DungeonWaypointsMod : ClientModInitializer {
-    override fun onInitializeClient() {
-        println("Dungeon Waypoints mod initialized!")
-        // We'll initialize features here later
+class DungeonWaypointsMod : ModInitializer {
+    override fun onInitialize() {
+        println("Dungeon Waypoints Mod initialized!")
     }
 }
